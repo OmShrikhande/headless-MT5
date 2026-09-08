@@ -1,0 +1,20 @@
+services:
+  - type: worker
+    name: headless-mt5-worker
+    runtime: docker
+    plan: starter
+    dockerfilePath: Dockerfile
+    autoDeploy: true
+    envVars:
+      - key: MT5_LOGIN
+        value: "11683952"
+      - key: MT5_PASSWORD
+        value: "#W&$pMG0"
+      - key: MT5_SERVER
+        value: "VantageInternational-Demo"
+      - key: EA_NAME
+        value: MyCustomEA.mq5
+      - key: CHART_SYMBOL
+        value: XAUUSD
+      - key: CHART_TIMEFRAME
+        value: M1
