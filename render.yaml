@@ -9,6 +9,7 @@ services:
       - key: MT5_LOGIN
         value: "11683952"
       - key: MT5_PASSWORD
+        # Literal password; YAML quotes preserve $ characters
         value: "#W&$pMG0"
       - key: MT5_SERVER
         value: "VantageInternational-Demo"

@@ -139,15 +139,32 @@ The default EA located in [`mql/MyCustomEA.mq5`](file:///c:/projects/headless-mt
 
 ## 🧪 Local Testing with Docker
 
-You can test the container locally on your computer before deploying to Render:
+You can test the container locally before deploying to Render.
+
+**Important (Apple Silicon M1/M2/M3):** MetaTrader 5 + Wine need `linux/amd64`. Docker will emulate via QEMU. Emulation is slow and **often fails** for Wine; native amd64 (Render, or an Intel/AMD Linux host) is the reliable path.
 
 ```bash
-# 1. Build the Docker image
-docker build -t headless-mt5 .
+# 0. Start Docker Desktop first
 
-# 2. Run container locally with your demo credentials
-docker run --rm -it headless-mt5
+# 1. Build (amd64 — required on Apple Silicon)
+docker build --platform linux/amd64 -t headless-mt5 .
+
+# 2. Run (first start installs MT5 — can take several minutes)
+docker run --rm -it --platform linux/amd64 headless-mt5
 ```
+
+Override credentials at runtime:
+
+```bash
+docker run --rm -it --platform linux/amd64 \
+  -e MT5_LOGIN=YOUR_LOGIN \
+  -e MT5_PASSWORD='YOUR_PASSWORD' \
+  -e MT5_SERVER=VantageInternational-Demo \
+  headless-mt5
+```
+
+### Recommended: Deploy on Render
+Render builds and runs on native `linux/amd64`, which avoids Apple Silicon QEMU issues. Use the Blueprint (`render.yaml`) flow in the section above.
 
 ---
 
